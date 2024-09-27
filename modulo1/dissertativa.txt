@@ -1,0 +1,7 @@
+1.1 SOLUÇÃO DISSERTATIVA
+
+1- Leia e armazene o número (n) que se quer multiplicar por 9 # Entrada de dados
+2- Aplique a operação X= n-1 e armazenar o valor de X # Processamento
+3- Aplique a operação Y= 10-n e armazenar o valor de Y # Processamento
+4- Realize a expressão para encontrar o resultado R = (X * 10) + Y e armazene # Processamento
+5- Apresente o resultado (R) # Saída
