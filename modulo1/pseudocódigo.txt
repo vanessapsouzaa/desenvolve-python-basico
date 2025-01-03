@@ -1,0 +1,9 @@
+Solução em pseudocódigo:
+
+1- Início;
+2- Leia n;
+3- X = n - 1;
+4- Y = 10 - n;
+5- R = (x * 10) + Y;
+6- Imprima R;
+7- Fim.
