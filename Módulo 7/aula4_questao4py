@@ -1,0 +1,72 @@
+import random
+
+def escolher_palavra():
+    # Abre o arquivo gabarito_forca.txt e escolhe uma palavra aleatória
+    with open('gabarito_forca.txt', 'r') as f:
+        palavras = f.readlines()
+    palavra_escolhida = random.choice(palavras).strip()  # Escolhe uma palavra aleatória e remove espaços extras
+    return palavra_escolhida
+
+def carregar_enforcados():
+    # Carrega os estágios do enforcado a partir do arquivo gabarito_enforcado.txt
+    with open('gabarito_enforcado.txt', 'r') as f:
+        enforcados = f.read().split('\n=========\n')
+    return enforcados
+
+def imprime_enforcado(erros, enforcados):
+    # Garante que o índice de erros não ultrapasse o número de estágios disponíveis
+    if erros < len(enforcados):
+        print(enforcados[erros])
+    else:
+        print(enforcados[-1])  # Exibe o último estágio se o número de erros for maior que a lista
+
+def jogar():
+    palavra = escolher_palavra()  # Escolhe a palavra do jogo
+    enforcados = carregar_enforcados()  # Carrega os estágios do enforcado
+
+    tentativas = 6
+    erros = 0
+    letras_corretas = ['_'] * len(palavra)  # Inicia a palavra com underscores
+    letras_erradas = []  # Armazena as letras erradas digitadas
+
+    print("Bem-vindo ao Jogo da Forca!")
+    print("A palavra tem", len(palavra), "letras.")
+    print("Tente adivinhar a palavra!")
+
+    # Enquanto o jogador não errar 6 vezes ou não adivinhar a palavra
+    while erros < tentativas and '_' in letras_corretas:
+        print("\nPalavra: ", ' '.join(letras_corretas))
+        print("Letras erradas:", ', '.join(letras_erradas))
+        letra = input("Digite uma letra: ").lower()
+
+        # Verifica se a letra digitada é válida
+        if len(letra) != 1 or not letra.isalpha():
+            print("Por favor, digite apenas uma letra válida.")
+            continue
+
+        # Verifica se a letra já foi digitada
+        if letra in letras_corretas or letra in letras_erradas:
+            print("Você já digitou essa letra. Tente outra.")
+            continue
+
+        # Verifica se a letra está na palavra
+        if letra in palavra:
+            print(f"A letra {letra} está na palavra!")
+            for i in range(len(palavra)):
+                if palavra[i] == letra:
+                    letras_corretas[i] = letra
+        else:
+            print(f"A letra {letra} não está na palavra.")
+            letras_erradas.append(letra)
+            erros += 1
+            imprime_enforcado(erros, enforcados)  # Exibe o enforcado de acordo com os erros
+
+    # Verifica se o jogador ganhou ou perdeu
+    if '_' not in letras_corretas:
+        print("\nParabéns, você adivinhou a palavra!")
+        print("A palavra era:", palavra)
+    else:
+        print("\nVocê perdeu! A palavra era:", palavra)
+
+# Inicia o jogo
+jogar()
